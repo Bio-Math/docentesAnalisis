@@ -1,0 +1,151 @@
+# Análisis Exploratorio de los Datos {#EDA}
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(dlookr)
+library(readxl)
+setwd("~/Dropbox/DrSc UABC/Colaborations/Bio-Math/datasets/docentes")
+dat <- read_excel("CEECD results numerico corregido.xlsx", 
+                  sheet = "Tabla CON RESULTADOS NUMWRICOS", 
+                  skip = 1)
+
+#Class
+library(readr)
+class <- read_csv("class.csv")
+
+#Full Class
+fullclass <- read.csv("fullclass.csv")
+
+library(Hmisc)
+
+library(dplyr)
+
+#class$teacher <- fullclass$Teacher
+class$FOBAP <- fullclass$FOBAP
+class$RES <- fullclass$RES
+data <- cbind(dat[,5:14],class)
+
+# Transformación a las escalas de variable apropiadas de las que alcanzo a entender, quedan algunas pendientes que posiblemente haya que reajustar la escala.
+data$`¿Cuál es su género?` <-  as.factor(data$`¿Cuál es su género?`)
+data$`¿Cuál es su edad?` <- factor(data$`¿Cuál es su edad?`, ordered = TRUE,
+                                   levels = c("18 a 30 años", "31 a 40 años", "41 a 50 años", "51 a 60 años", "Mayor de 60 años"))
+data$`¿Cuál es su grado académico?` <- factor(data$`¿Cuál es su grado académico?`,ordered = TRUE,
+       levels = c("Preparatoria","Licenciatura","Posgrado (maestría, doctorado, especialidad)"))
+data$`Estado donde vive actualmente` <- as.factor(data$`Estado donde vive actualmente`)
+data$`¿Cuántas personas viven en su casa, incluyendo usted?` <- as.numeric(data$`¿Cuántas personas viven en su casa, incluyendo usted?`)
+data$`¿En qué modalidad imparte clases?` <- as.factor(data$`¿En qué modalidad imparte clases?`)
+data$`¿Cuántas horas trabaja al día?` <- factor(data$`¿Cuántas horas trabaja al día?`, ordered = TRUE,
+       levels = c("No aplica","1 a 4 hroas al día", "4 a 6 horas al día", "6 a 8 horas al día", "Más de 8 horas al día"))
+data$Level <- factor(data$Level, ordered = TRUE,
+       levels = c("ABSENT", "MILD", "MODERATE", "SEVERE"))
+
+## Renaming variables
+data <- data %>%
+  rename(genero = `¿Cuál es su género?`,
+         edad = `¿Cuál es su edad?`,
+         grado_academico = `¿Cuál es su grado académico?`,
+         habitantes_en_casa  = `¿Cuántas personas viven en su casa, incluyendo usted?`,
+         enfermedades = `¿Padece usted alguna enfermedad de riesgo? (seleccione todas las que apliquen)`,
+         modalidad_clases = `¿En qué modalidad imparte clases?`,
+         horas_trabajo_diarias = `¿Cuántas horas trabaja al día?`,
+         estado_residencia = `Estado donde vive actualmente`,
+         nivel_educativo_clases = `Nivel educativo en el que imparte clases (seleccione todas las que apliquen)`,
+         horas_trabajo_onsite = `En caso de contestar presencial o mixto, en la pregunta anterior ¿Cuántas horas pasa usted en el area física de trabajo a la semana?`)
+
+data$habitantes_en_casa <- factor(data$habitantes_en_casa, ordered = TRUE,
+                                  levels = c("1","2","3","4"))
+```
+
+La base de datos `fullclass.csv` contiene las siguientes variables extras a `class.csv`: 
+
+  - *`r names(fullclass)[names(fullclass) %nin% names(class)]`*
+  
+Se agregan las variables `FOBAP` y `RES`.
+
+
+## Diagnóstico General
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+setwd("~/Dropbox/DrSc UABC/Colaborations/Bio-Math/datasets/docentes/bookdown-docentes")
+library(kableExtra)
+
+data %>% 
+  diagnose() %>% 
+  kbl() %>% 
+  kable_paper("hover", full_width = F) 
+```
+
+**Dudas:**
+  
+  - ¿Las variables están en las escalas de medición correcta para cada uno?
+   - Si no es así, ¿cuáles debemos cambiar y a qué tipo de escala?
+
+
+## Análisis Univariado
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+describe(data)
+```
+
+## Visualizaciones de Normalidad en Variables Numéricas
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  normality() %>% 
+  kbl() %>% 
+  kable_paper("hover",full_width = F)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+plot_normality(Danger)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+plot_normality(Xeno)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  plot_normality(Socio)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+data %>% 
+  plot_normality(Con)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  plot_normality(Trauma)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  plot_normality(Comp)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  plot_normality(FOBAP)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  plot_normality(RES)
+```
+
+## Análisis Bivariado
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% 
+  correlate() %>% 
+  kbl() %>% 
+  kable_paper("hover", full_width = F)
+```
+
+### Matriz de correlación, variables numéricas
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+plot_correlate(data)
+```
+

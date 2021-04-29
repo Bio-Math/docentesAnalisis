@@ -1,0 +1,7 @@
+descripción-general-del-proyecto
+EDA
+diagnóstico-general
+análisis-univariado
+visualizaciones-de-normalidad-en-variables-numéricas
+análisis-bivariado
+matriz-de-correlación-variables-numéricas

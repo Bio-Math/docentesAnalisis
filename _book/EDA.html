@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Sección 2 Análisis Exploratorio de los Datos | Vacunación COVID-19 en Docentes</title>
+  <meta name="description" content="Repositorio de uso privado para el reporte de análisis de datos relacionado con vacunación COVID-19 en docentes." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Sección 2 Análisis Exploratorio de los Datos | Vacunación COVID-19 en Docentes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Repositorio de uso privado para el reporte de análisis de datos relacionado con vacunación COVID-19 en docentes." />
+  <meta name="github-repo" content="Bio-Math/docentes" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Sección 2 Análisis Exploratorio de los Datos | Vacunación COVID-19 en Docentes" />
+  
+  <meta name="twitter:description" content="Repositorio de uso privado para el reporte de análisis de datos relacionado con vacunación COVID-19 en docentes." />
+  
+
+<meta name="author" content="Bio-Math Team" />
+
+
+<meta name="date" content="2021-04-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Vacunación COVID-19 en Docentes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Descripción General del Proyecto</a></li>
+<li class="chapter" data-level="2" data-path="EDA.html"><a href="EDA.html"><i class="fa fa-check"></i><b>2</b> Análisis Exploratorio de los Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="EDA.html"><a href="EDA.html#diagnóstico-general"><i class="fa fa-check"></i><b>2.1</b> Diagnóstico General</a></li>
+<li class="chapter" data-level="2.2" data-path="EDA.html"><a href="EDA.html#análisis-univariado"><i class="fa fa-check"></i><b>2.2</b> Análisis Univariado</a></li>
+<li class="chapter" data-level="2.3" data-path="EDA.html"><a href="EDA.html#visualizaciones-de-normalidad-en-variables-numéricas"><i class="fa fa-check"></i><b>2.3</b> Visualizaciones de Normalidad en Variables Numéricas</a></li>
+<li class="chapter" data-level="2.4" data-path="EDA.html"><a href="EDA.html#análisis-bivariado"><i class="fa fa-check"></i><b>2.4</b> Análisis Bivariado</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="EDA.html"><a href="EDA.html#matriz-de-correlación-variables-numéricas"><i class="fa fa-check"></i><b>2.4.1</b> Matriz de correlación, variables numéricas</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/Bio-Math/docentes" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Vacunación COVID-19 en Docentes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="EDA" class="section level1" number="2">
+<h1><span class="header-section-number">Sección 2</span> Análisis Exploratorio de los Datos</h1>
+<p>La base de datos <code>fullclass.csv</code> contiene las siguientes variables extras a <code>class.csv</code>:</p>
+<ul>
+<li><em>Teacher</em></li>
+</ul>
+<p>Se agregan las variables <code>FOBAP</code> y <code>RES</code>.</p>
+<div id="diagnóstico-general" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Diagnóstico General</h2>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+variables
+</th>
+<th style="text-align:left;">
+types
+</th>
+<th style="text-align:right;">
+missing_count
+</th>
+<th style="text-align:right;">
+missing_percent
+</th>
+<th style="text-align:right;">
+unique_count
+</th>
+<th style="text-align:right;">
+unique_rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+genero
+</td>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.345292
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.0179372
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+edad
+</td>
+<td style="text-align:left;">
+ordered
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.242152
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.0269058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+grado_academico
+</td>
+<td style="text-align:left;">
+ordered
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.345292
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.0179372
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+estado_residencia
+</td>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+4.932735
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.0717489
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+habitantes_en_casa
+</td>
+<td style="text-align:left;">
+ordered
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+22.421525
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0224215
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+enfermedades
+</td>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+4.035874
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.0941704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nivel_educativo_clases
+</td>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+6.278027
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+0.1031390
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+modalidad_clases
+</td>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.242152
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.0269058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+horas_trabajo_onsite
+</td>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:right;">
+137
+</td>
+<td style="text-align:right;">
+61.434978
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.0269058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+horas_trabajo_diarias
+</td>
+<td style="text-align:left;">
+ordered
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+12.556054
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0224215
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.1076233
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0.1121076
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.1569507
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.1076233
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.1076233
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.1076233
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Level
+</td>
+<td style="text-align:left;">
+ordered
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.0179372
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.0403587
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.0807175
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dudas:</strong></p>
+<ul>
+<li>¿Las variables están en las escalas de medición correcta para cada uno?</li>
+<li>Si no es así, ¿cuáles debemos cambiar y a qué tipo de escala?</li>
+</ul>
+</div>
+<div id="análisis-univariado" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Análisis Univariado</h2>
+<pre><code>## data 
+## 
+##  19  Variables      223  Observations
+## --------------------------------------------------------------------------------
+## genero 
+##        n  missing distinct 
+##      220        3        3 
+##                                
+## Value      Hombre  Mujer   Otro
+## Frequency      62    157      1
+## Proportion  0.282  0.714  0.005
+## --------------------------------------------------------------------------------
+## edad 
+##        n  missing distinct 
+##      218        5        5 
+## 
+## lowest : 18 a 30 años     31 a 40 años     41 a 50 años     51 a 60 años     Mayor de 60 años
+## highest: 18 a 30 años     31 a 40 años     41 a 50 años     51 a 60 años     Mayor de 60 años
+##                                                                               
+## Value          18 a 30 años     31 a 40 años     41 a 50 años     51 a 60 años
+## Frequency                53               73               45               36
+## Proportion            0.243            0.335            0.206            0.165
+##                            
+## Value      Mayor de 60 años
+## Frequency                11
+## Proportion            0.050
+## --------------------------------------------------------------------------------
+## grado_academico 
+##        n  missing distinct 
+##      220        3        3 
+## 
+## Preparatoria (6, 0.027), Licenciatura (155, 0.705), Posgrado (maestría,
+## doctorado, especialidad) (59, 0.268)
+## --------------------------------------------------------------------------------
+## estado_residencia 
+##        n  missing distinct 
+##      212       11       15 
+## 
+## lowest : Baja California      Campeche             Chihuahua            Coahuila de Zaragoza Estado de México    
+## highest: Sinaloa              Sonora               Tamaulipas           Veracruz             Yucatán             
+## 
+## Baja California (49, 0.231), Campeche (3, 0.014), Chihuahua (25, 0.118),
+## Coahuila de Zaragoza (17, 0.080), Estado de México (1, 0.005), Hidalgo (18,
+## 0.085), Nuevo León (14, 0.066), Oaxaca (2, 0.009), Puebla (1, 0.005), San Luis
+## Potosí (2, 0.009), Sinaloa (20, 0.094), Sonora (52, 0.245), Tamaulipas (6,
+## 0.028), Veracruz (1, 0.005), Yucatán (1, 0.005)
+## --------------------------------------------------------------------------------
+## habitantes_en_casa 
+##        n  missing distinct 
+##      173       50        4 
+##                                   
+## Value          1     2     3     4
+## Frequency     17    48    48    60
+## Proportion 0.098 0.277 0.277 0.347
+## --------------------------------------------------------------------------------
+## enfermedades 
+##        n  missing distinct 
+##      214        9       20 
+## 
+## lowest : Cáncer;                                                                                                                           Diabetes;                                                                                                                         Diabetes;Cáncer;VIH (SIDA);Obesidad;                                                                                              Diabetes;Enfermedades cardiacas (p.ej. hipertensión, infarto);                                                                    Diabetes;Enfermedades cardiacas (p.ej. hipertensión, infarto);Enfermedades pulmonares (p. ej. Asma, EPOC, tuberculosis);Obesidad;
+## highest: Ninguna;                                                                                                                          Obesidad;                                                                                                                         Obesidad;Diabetes;Enfermedades cardiacas (p.ej. hipertensión, infarto);                                                           Obesidad;Otra;                                                                                                                    Otra;                                                                                                                            
+## --------------------------------------------------------------------------------
+## nivel_educativo_clases 
+##        n  missing distinct 
+##      209       14       22 
+## 
+## lowest : Licenciatura;                     Licenciatura;Posgrado;            Licenciatura;Preparatoria;        Posgrado;                         Posgrado;Licenciatura;           
+## highest: Secundaria;                       Secundaria;Licenciatura;          Secundaria;Preparatoria;          Secundaria;Preparatoria;Primaria; Secundaria;Primaria;             
+## --------------------------------------------------------------------------------
+## modalidad_clases 
+##        n  missing distinct 
+##      218        5        5 
+## 
+## lowest : En linea                      En línea                      Mixto (presencial y en línea) No aplica                     Presencial                   
+## highest: En linea                      En línea                      Mixto (presencial y en línea) No aplica                     Presencial                   
+## 
+## En linea (1, 0.005), En línea (184, 0.844), Mixto (presencial y en línea) (16,
+## 0.073), No aplica (11, 0.050), Presencial (6, 0.028)
+## --------------------------------------------------------------------------------
+## horas_trabajo_onsite 
+##        n  missing distinct 
+##       86      137        5 
+## 
+## lowest : 1 a 4 horas a la semana     4 a 8 horas a la semana     8 a 12 horas a la semana    Más de 12 horas a la semana No aplica                  
+## highest: 1 a 4 horas a la semana     4 a 8 horas a la semana     8 a 12 horas a la semana    Más de 12 horas a la semana No aplica                  
+## 
+## 1 a 4 horas a la semana (13, 0.151), 4 a 8 horas a la semana (19, 0.221), 8 a
+## 12 horas a la semana (4, 0.047), Más de 12 horas a la semana (15, 0.174), No
+## aplica (35, 0.407)
+## --------------------------------------------------------------------------------
+## horas_trabajo_diarias 
+##        n  missing distinct 
+##      195       28        4 
+##                                                                             
+## Value                  No aplica    4 a 6 horas al día    6 a 8 horas al día
+## Frequency                      4                    41                    73
+## Proportion                 0.021                 0.210                 0.374
+##                                 
+## Value      Más de 8 horas al día
+## Frequency                     77
+## Proportion                 0.395
+## --------------------------------------------------------------------------------
+## Danger 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       24    0.996    13.36    6.082      2.2      6.0 
+##      .25      .50      .75      .90      .95 
+##     10.0     13.0     17.0     20.0     22.0 
+## 
+## lowest :  0  1  2  4  5, highest: 20 21 22 23 24
+## --------------------------------------------------------------------------------
+## Xeno 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       25    0.996    11.99    6.225        2        5 
+##      .25      .50      .75      .90      .95 
+##        8       12       16       18       21 
+## 
+## lowest :  0  1  2  3  4, highest: 20 21 22 23 24
+## --------------------------------------------------------------------------------
+## Socio 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       35    0.998    16.19    9.335        2        6 
+##      .25      .50      .75      .90      .95 
+##       11       16       22       27       30 
+## 
+## lowest :  0  1  2  4  5, highest: 31 32 33 34 36
+## --------------------------------------------------------------------------------
+## Con 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       24    0.995    10.92    6.321        2        3 
+##      .25      .50      .75      .90      .95 
+##        7       11       15       18       19 
+## 
+## lowest :  0  1  2  3  4, highest: 19 20 22 23 24
+## --------------------------------------------------------------------------------
+## Trauma 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       24    0.983    5.466    6.236      0.0      0.0 
+##      .25      .50      .75      .90      .95 
+##      1.0      3.0      9.0     13.8     18.0 
+## 
+## lowest :  0  1  2  3  4, highest: 19 20 21 22 24
+## --------------------------------------------------------------------------------
+## Comp 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       24    0.995    7.839    6.145        0        0 
+##      .25      .50      .75      .90      .95 
+##        4        7       11       16       18 
+## 
+## lowest :  0  1  2  3  4, highest: 19 20 22 23 24
+## --------------------------------------------------------------------------------
+## Level 
+##        n  missing distinct 
+##      223        0        4 
+##                                               
+## Value        ABSENT     MILD MODERATE   SEVERE
+## Frequency        35      113       67        8
+## Proportion    0.157    0.507    0.300    0.036
+## --------------------------------------------------------------------------------
+## FOBAP 
+##        n  missing distinct     Info     Mean      Gmd 
+##      223        0        9    0.979     3.17    2.399 
+## 
+## lowest : 0 1 2 3 4, highest: 4 5 6 7 8
+##                                                                 
+## Value          0     1     2     3     4     5     6     7     8
+## Frequency     26    29    38    31    45    17    23     6     8
+## Proportion 0.117 0.130 0.170 0.139 0.202 0.076 0.103 0.027 0.036
+## --------------------------------------------------------------------------------
+## RES 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      223        0       18    0.982    15.72    4.785        4       10 
+##      .25      .50      .75      .90      .95 
+##       14       17       19       20       20 
+## 
+## lowest :  0  2  3  4  5, highest: 16 17 18 19 20
+##                                                                             
+## Value          0     2     3     4     5     8     9    10    11    12    13
+## Frequency      7     2     2     2     2     2     4     6     4     7     9
+## Proportion 0.031 0.009 0.009 0.009 0.009 0.009 0.018 0.027 0.018 0.031 0.040
+##                                                     
+## Value         14    15    16    17    18    19    20
+## Frequency     10    18    30    16    29    24    49
+## Proportion 0.045 0.081 0.135 0.072 0.130 0.108 0.220
+## --------------------------------------------------------------------------------</code></pre>
+</div>
+<div id="visualizaciones-de-normalidad-en-variables-numéricas" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Visualizaciones de Normalidad en Variables Numéricas</h2>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+vars
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p_value
+</th>
+<th style="text-align:right;">
+sample
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.9775065
+</td>
+<td style="text-align:right;">
+0.0012611
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.9854928
+</td>
+<td style="text-align:right;">
+0.0224277
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.9872429
+</td>
+<td style="text-align:right;">
+0.0437623
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.9838725
+</td>
+<td style="text-align:right;">
+0.0121940
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.8545071
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.9528619
+</td>
+<td style="text-align:right;">
+0.0000011
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.9489052
+</td>
+<td style="text-align:right;">
+0.0000004
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.7967957
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+223
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="análisis-bivariado" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Análisis Bivariado</h2>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+var1
+</th>
+<th style="text-align:left;">
+var2
+</th>
+<th style="text-align:right;">
+coef_corr
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.8315725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.6757264
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.6856952
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.5800335
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.5397050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.6300303
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:right;">
+0.2233475
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.8315725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.7470481
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.7390266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.5240995
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.4792495
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.5819781
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:right;">
+0.1164122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.6757264
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.7470481
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.7419982
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.4993905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.4833135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.4788010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:right;">
+0.1406821
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.6856952
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.7390266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.7419982
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.4659353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.5155762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.5580933
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:right;">
+0.1757603
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.5800335
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.5240995
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.4993905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.4659353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.6139690
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+0.5580095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:right;">
+-0.0517958
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.5397050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.4792495
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.4833135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.5155762
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.6139690
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.5247354
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:right;">
+0.1239755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.6300303
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.5819781
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.4788010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.5580933
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.5580095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.5247354
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:right;">
+0.0466312
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Danger
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.2233475
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Xeno
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.1164122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Socio
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.1406821
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Con
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.1757603
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Trauma
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+-0.0517958
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Comp
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.1239755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOBAP
+</td>
+<td style="text-align:left;">
+RES
+</td>
+<td style="text-align:right;">
+0.0466312
+</td>
+</tr>
+</tbody>
+</table>
+<div id="matriz-de-correlación-variables-numéricas" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Matriz de correlación, variables numéricas</h3>
+<p><img src="bookdown-docentes_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-EDA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

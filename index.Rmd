@@ -1,0 +1,19 @@
+--- 
+title: "Vacunación COVID-19 en Docentes"
+subtitle: "Exploración de Base de Datos"
+author: "Bio-Math Team"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: Bio-Math/docentes
+description: "Repositorio de uso privado para el reporte de análisis de datos relacionado con vacunación COVID-19 en docentes."
+---
+
+
+# Descripción General del Proyecto
+
+<img src="img/logoBioMath.jpeg" style = "align:center"/> 
